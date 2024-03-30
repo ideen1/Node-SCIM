@@ -1,4 +1,6 @@
+
 # Node-SCIM
+![example workflow](https://github.com/ideen1/Node-SCIM/blob/main/.github/workflows/build.yml/badge.svg)
 
 SCIM (System for cross-domain Identity Management) is an industry standard definition used vastly between enterprise applications to securely exchange lifecycle information for resources such as Users and Groups. It is primarly used to provision/deprovision users within a service provider application by an IdP(Identity provider). It can also be extended to provision other custom resource types.
 
