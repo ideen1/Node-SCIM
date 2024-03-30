@@ -1,6 +1,6 @@
 {
   "name": "node-scim",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A library that simplifies the handling of SCIM requests and allows you to integrate them into your system or app",
   "main": "SCIM.ts",
   "scripts": {
