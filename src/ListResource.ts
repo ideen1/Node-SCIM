@@ -16,7 +16,6 @@ export class ListResource {
   } as ListResource;
   constructor(resources: SCIMResourceType[]) {
     this.resource.totalResults = resources.length;
-    console.log("RESOURCES", resources);
     this.resource.Resources = resources;
   }
 

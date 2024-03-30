@@ -167,7 +167,6 @@ export class User extends Resource implements ResourceActions {
    * Resource Actions
    */
   public create = async (user: SCIMUserResource) => {
-    console.log("create user", user);
     return await this.registeredDatabaseHandlers[
       ResourceDBCallBackType.Create
     ]?.(this.resourceToPublic(user))
@@ -245,7 +244,6 @@ export class User extends Resource implements ResourceActions {
   public get = async (userId: string) => {
     return this.registeredDatabaseHandlers[ResourceDBCallBackType.Get]?.(userId)
       .then((user) => {
-        console.log("GET USER", user);
         if (Object.keys(user).length === 0) {
           return {
             statusCode: 404,

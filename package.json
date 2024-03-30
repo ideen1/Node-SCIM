@@ -1,0 +1,19 @@
+{
+  "name": "node-scim",
+  "version": "0.1.0",
+  "description": "A library that simplifies the handling of SCIM requests and allows you to integrate them into your system or app",
+  "main": "SCIM.ts",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ideen1/Node-SCIM"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.4.3"
+  }
+}
