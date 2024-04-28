@@ -100,10 +100,10 @@ export class SCIM {
    * @param request - The SCIM request object.
    */
   private requestHandlerV2 = async (request: {
-    body: string | null;
-    httpMethod: string | null;
-    query?: string;
-    [name: string]: any;
+    body: string | undefined;
+    httpMethod: string;
+    path: string;
+    query?: { filter: string } | undefined;
   }): Promise<HTTPResponse> => {
     if (request.body) {
       const parsedBody = JSON.parse(request.body);
@@ -116,7 +116,7 @@ export class SCIM {
     }
 
     if (request.httpMethod === "GET" && request.path === "/Users") {
-      return this.user.list(this.extractQuery(request.path));
+      return this.user.list(request.query?.filter);
     }
     if (request.httpMethod === "GET" && this.pathHasId(request.path)) {
       return this.user.get(this.extractPath(request.path));
@@ -164,10 +164,20 @@ export class SCIM {
    * @param request - The request object containing the body, httpMethod, and other properties.
    */
   start = async (request: {
-    body: string | null;
-    httpMethod: string | null;
-    [name: string]: any;
+    body: string | undefined;
+    httpMethod: string;
+    path: string;
+    query?: { filter: any } | undefined;
   }): Promise<HTTPResponse> => {
+    // Ensure we only have one source for query parameters
+    if (request.query && this.pathHasQuery(request.path)) {
+      console.warn(
+        "Query argument provided to start() while path also contains query parameters. Using query parameters passed to start() arguments."
+      );
+    } else if (this.pathHasQuery(request.path)) {
+      request.query.filter = this.extractQuery(request.path);
+    }
+
     return await this.requestHandlerV2(request);
   };
 }

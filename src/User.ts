@@ -184,7 +184,7 @@ export class User extends Resource implements ResourceActions {
       });
   };
 
-  public list = async (query: string) => {
+  public list = async (query?: string) => {
     return this.registeredDatabaseHandlers[ResourceDBCallBackType.List]?.(query)
       .then((users) => {
         return {
