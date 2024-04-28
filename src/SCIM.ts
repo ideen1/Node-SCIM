@@ -100,12 +100,12 @@ export class SCIM {
    * @param request - The SCIM request object.
    */
   private requestHandlerV2 = async (request: {
-    body: string | undefined;
     httpMethod: string;
     path: string;
-    query?: { filter: string } | undefined;
+    body?: string | undefined;
+    query?: { filter: any } | undefined | null;
   }): Promise<HTTPResponse> => {
-    if (request.body) {
+    if (request?.body) {
       const parsedBody = JSON.parse(request.body);
       if (request.httpMethod === "POST" && request.path === "/Users") {
         return this.user.create(parsedBody);
@@ -164,10 +164,10 @@ export class SCIM {
    * @param request - The request object containing the body, httpMethod, and other properties.
    */
   start = async (request: {
-    body: string | undefined;
     httpMethod: string;
     path: string;
-    query?: { filter: any } | undefined;
+    body?: string | undefined;
+    query?: { filter: any } | undefined | null;
   }): Promise<HTTPResponse> => {
     // Ensure we only have one source for query parameters
     if (request.query && this.pathHasQuery(request.path)) {
