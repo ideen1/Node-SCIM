@@ -97,8 +97,8 @@ export class User extends Resource implements ResourceActions {
     return {
       userName: resource?.userName ?? undefined,
       email: resource?.emails?.[0]?.value ?? undefined,
-      givenName: resource?.name.givenName ?? undefined,
-      familyName: resource?.name.familyName ?? undefined,
+      givenName: resource?.name?.givenName ?? undefined,
+      familyName: resource?.name?.familyName ?? undefined,
       title: "" ?? undefined,
       id: resource?.id ?? undefined,
       externalId: resource?.externalId ?? undefined,
