@@ -6,6 +6,12 @@ export type SCIMResourceType = SCIMUserResource;
 
 export type SCIMPublicType = SCIMUserPublic;
 
+export interface ListFilter {
+  field: string;
+  operator: string;
+  value: string;
+}
+
 export abstract class ResourceActions {
   abstract create(resource: SCIMResourceType): Promise<HTTPResponse>;
   abstract list(query: string): Promise<HTTPResponse>;
@@ -20,7 +26,7 @@ export abstract class ResourceActions {
     callback: (resource: Partial<SCIMPublicType>) => Promise<SCIMPublicType>
   ): void;
   abstract registerListDBCallback(
-    callback: (query: string) => Promise<SCIMPublicType[]>
+    callback: (query: ListFilter) => Promise<SCIMPublicType[]>
   ): void;
   abstract registerUpdateDBCallback(
     callback: (

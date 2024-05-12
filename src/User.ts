@@ -2,6 +2,7 @@ import { PatchRequest } from "./Patch.js";
 import { SCIMError } from "./SCIMError.js";
 import { ListResource } from "./ListResource.js";
 import {
+  ListFilter,
   Resource,
   ResourceActions,
   ResourceDBCallBackType,
@@ -63,7 +64,9 @@ export class User extends Resource implements ResourceActions {
     [ResourceDBCallBackType.Create]: (
       resource: SCIMUserPublic
     ) => Promise<SCIMUserPublic>;
-    [ResourceDBCallBackType.List]: (query: string) => Promise<SCIMUserPublic[]>;
+    [ResourceDBCallBackType.List]: (
+      query: ListFilter
+    ) => Promise<SCIMUserPublic[]>;
     [ResourceDBCallBackType.Update]: (
       resource: PatchRequest,
       resourceId: string
@@ -92,14 +95,14 @@ export class User extends Resource implements ResourceActions {
 
   private resourceToPublic = (resource: SCIMUserResource): SCIMUserPublic => {
     return {
-      userName: resource.userName,
-      email: resource.emails[0].value,
-      givenName: resource.name.givenName,
-      familyName: resource.name.familyName,
-      title: "",
-      id: resource.id,
-      externalId: resource.externalId,
-      role: resource.roles[0].value,
+      userName: resource.userName ?? undefined,
+      email: resource.emails[0].value ?? undefined,
+      givenName: resource.name.givenName ?? undefined,
+      familyName: resource.name.familyName ?? undefined,
+      title: "" ?? undefined,
+      id: resource.id ?? undefined,
+      externalId: resource.externalId ?? undefined,
+      role: resource.roles[0].value ?? undefined,
     };
   };
 
@@ -140,7 +143,7 @@ export class User extends Resource implements ResourceActions {
     this.registeredDatabaseHandlers[ResourceDBCallBackType.Create] = callback;
   };
   public registerListDBCallback = (
-    callback: (query: string) => Promise<SCIMUserPublic[]>
+    callback: (query: ListFilter) => Promise<SCIMUserPublic[]>
   ) => {
     this.registeredDatabaseHandlers[ResourceDBCallBackType.List] = callback;
   };
@@ -185,7 +188,13 @@ export class User extends Resource implements ResourceActions {
   };
 
   public list = async (query?: string) => {
-    return this.registeredDatabaseHandlers[ResourceDBCallBackType.List]?.(query)
+    const splitQuery = query?.split(" ");
+
+    return this.registeredDatabaseHandlers[ResourceDBCallBackType.List]?.({
+      field: splitQuery[0],
+      operator: splitQuery[1],
+      value: splitQuery[2],
+    })
       .then((users) => {
         return {
           statusCode: 200,
