@@ -187,8 +187,8 @@ export class User extends Resource implements ResourceActions {
       });
   };
 
-  public list = async (query?: string) => {
-    const splitQuery = query?.split(" ");
+  public list = async (query?: { filter: any } | undefined | null) => {
+    const splitQuery = query?.filter.split(" ");
 
     return this.registeredDatabaseHandlers[ResourceDBCallBackType.List]?.({
       field: splitQuery[0],

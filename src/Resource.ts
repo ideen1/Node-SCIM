@@ -14,7 +14,9 @@ export interface ListFilter {
 
 export abstract class ResourceActions {
   abstract create(resource: SCIMResourceType): Promise<HTTPResponse>;
-  abstract list(query: string): Promise<HTTPResponse>;
+  abstract list(
+    query: { filter: any } | undefined | null
+  ): Promise<HTTPResponse>;
   abstract update(
     resource: PatchRequest,
     resourceId: string
