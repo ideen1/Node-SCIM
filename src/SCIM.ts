@@ -46,7 +46,7 @@ export class SCIM {
   private pathHasId = (path: string) => {
     // see if path contains something after a slash
     const pathParts = path.split("/");
-    return pathParts.length > 1;
+    return pathParts.length > 2;
   };
 
   private pathHasQuery = (path: string) => {
