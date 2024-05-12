@@ -95,14 +95,14 @@ export class User extends Resource implements ResourceActions {
 
   private resourceToPublic = (resource: SCIMUserResource): SCIMUserPublic => {
     return {
-      userName: resource.userName ?? undefined,
-      email: resource.emails[0].value ?? undefined,
-      givenName: resource.name.givenName ?? undefined,
-      familyName: resource.name.familyName ?? undefined,
+      userName: resource?.userName ?? undefined,
+      email: resource?.emails?.[0]?.value ?? undefined,
+      givenName: resource?.name.givenName ?? undefined,
+      familyName: resource?.name.familyName ?? undefined,
       title: "" ?? undefined,
-      id: resource.id ?? undefined,
-      externalId: resource.externalId ?? undefined,
-      role: resource.roles[0].value ?? undefined,
+      id: resource?.id ?? undefined,
+      externalId: resource?.externalId ?? undefined,
+      role: resource?.roles?.[0].value ?? undefined,
     };
   };
 
